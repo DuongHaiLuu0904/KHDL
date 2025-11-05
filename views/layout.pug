@@ -1,0 +1,33 @@
+//- Base Layout Template
+//- All other templates extend from this layout
+
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        title= title || 'Crypto Analysis Dashboard'
+
+        script(src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8")
+
+        link(rel="stylesheet" href="/css/style.css")
+
+        block head
+
+    body
+        header.header
+            .container
+                h1.logo
+                    a(href="/") 📊 Crypto Analysis Dashboard
+                nav.nav
+                    a(href="/") Home
+
+        main.main-content
+            block content
+
+        footer.footer
+            .container
+                p &copy; 2025 Cryptocurrency Analysis 
+
+        block scripts

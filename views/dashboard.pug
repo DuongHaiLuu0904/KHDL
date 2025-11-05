@@ -1,0 +1,139 @@
+//- Dashboard Template
+//- Displays comprehensive analysis and interactive visualizations
+
+extends layout
+
+block content
+    .container
+        //- Coin header
+        .coin-header
+            .coin-info
+                if coin.image
+                    img.coin-image(src=coin.image alt=coin.name)
+                div
+                    h2.coin-name= coin.name
+                    p.coin-symbol= coin.symbol
+                    p.coin-rank Rank ##{coin.market_cap_rank}
+            .coin-stats
+                .stat-item
+                    .stat-label Current Price
+                    .stat-value $#{coin.current_price.toLocaleString()}
+                .stat-item
+                    .stat-label Market Cap
+                    .stat-value $#{(coin.market_cap / 1e9).toFixed(2)}B
+
+        //- Back button
+        .actions
+            a.btn.btn-secondary(href="/") ← Back to Selection
+
+        //- Statistics Overview
+        .stats-section
+            h3 📊 Statistical Summary (90 Days)
+            .stats-grid
+                .stat-card
+                    h4 Price Statistics
+                    p 
+                        strong Min: 
+                        | $#{chartData.statistics.price.min.toLocaleString('en-US', {maximumFractionDigits: 2})}
+                    p 
+                        strong Max: 
+                        | $#{chartData.statistics.price.max.toLocaleString('en-US', {maximumFractionDigits: 2})}
+                    p 
+                        strong Average: 
+                        | $#{chartData.statistics.price.mean.toLocaleString('en-US', {maximumFractionDigits: 2})}
+
+                .stat-card
+                    h4 Volume Statistics
+                    p 
+                        strong Min: 
+                        | $#{(chartData.statistics.volume.min / 1e9).toFixed(2)}B
+                    p 
+                        strong Max: 
+                        | $#{(chartData.statistics.volume.max / 1e9).toFixed(2)}B
+                    p 
+                        strong Average: 
+                        | $#{(chartData.statistics.volume.mean / 1e9).toFixed(2)}B
+
+                .stat-card
+                    h4 Daily Returns
+                    p 
+                        strong Best Day: 
+                        | +#{chartData.statistics.returns.max.toFixed(2)}%
+                    p 
+                        strong Worst Day: 
+                        | #{chartData.statistics.returns.min.toFixed(2)}%
+                    p 
+                        strong Volatility: 
+                        | ±#{chartData.statistics.returns.volatility.toFixed(2)}%
+
+        //- Charts Section
+        .charts-section
+            h3 📈 Interactive Visualizations
+
+            .charts-tabs
+                button.tab-button.active(data-tab="distribution") 📊 Distribution Analysis
+                button.tab-button(data-tab="timeseries") 📈 Time Series
+                button.tab-button(data-tab="relationship") 🔍 Relationships
+                button.tab-button(data-tab="advanced") 🎯 Advanced
+
+            //- Tab 1: Distribution Analysis
+            .tab-content.active(data-content="distribution")
+                .chart-container
+                    h4 1. Histogram - Daily Returns Distribution
+                    #histogram-chart.chart-placeholder
+                    p.chart-description Phân phối phần trăm thay đổi giá hàng ngày. Giá trị dương = giá tăng.
+
+                .chart-container
+                    h4 2. Box Plot - Returns & Price Changes
+                    #boxplot-chart.chart-placeholder
+                    p.chart-description Box plot hiển thị phân vị, median và outliers của returns và price changes.
+
+                .chart-container
+                    h4 3. Violin Plot - Return Distribution Comparison
+                    #violin-chart.chart-placeholder
+                    p.chart-description So sánh phân phối của ngày tăng giá vs ngày giảm giá.
+
+            //- Tab 2: Time Series
+            .tab-content(data-content="timeseries")
+                .chart-container
+                    h4 4. Line/Area Chart - Price Trend & 7-Day Moving Average
+                    #price-chart.chart-placeholder
+                    p.chart-description Xu hướng giá theo thời gian với đường trung bình động 7 ngày.
+
+                .chart-container
+                    h4 5. Area Chart - Volume Over Time
+                    #volume-area-chart.chart-placeholder
+                    p.chart-description Khối lượng giao dịch theo thời gian.
+
+            //- Tab 3: Relationships
+            .tab-content(data-content="relationship")
+                .chart-container
+                    h4 6. Scatter Plot with Regression - Volume vs Price
+                    #scatter-regression-chart.chart-placeholder
+                    p.chart-description Mối quan hệ giữa khối lượng giao dịch và giá, kèm đường hồi quy tuyến tính.
+
+                .chart-container
+                    h4 7. Correlation Heatmap
+                    #heatmap-chart.chart-placeholder
+                    p.chart-description Ma trận tương quan giữa Price, Volume và Market Cap (-1 đến +1).
+
+            //- Tab 4: Advanced
+            .tab-content(data-content="advanced")
+                .chart-container
+                    h4 8. Treemap - Market Performance by Period
+                    #treemap-chart.chart-placeholder
+                    p.chart-description Phân bổ khối lượng giao dịch trung bình theo từng quý (90 ngày chia 4 phần).
+
+                .chart-container
+                    h4 9. Word Cloud - Price Movement Frequency
+                    #wordcloud-chart.chart-placeholder
+                    p.chart-description Tần suất các mức độ thay đổi giá (từ huge gain đến huge loss).
+
+block scripts
+    //- Embed chart data into the page for client-side JavaScript
+    script.
+        var chartData = !{JSON.stringify(chartData)};
+        var coinName = !{JSON.stringify(coin.name)};
+
+    //- Load custom dashboard JavaScript
+    script(src="/js/dashboard.js")

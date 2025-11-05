@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    .container
+        .hero
+            h2.hero-title Welcome to Crypto Analysis Dashboard
+            p.hero-subtitle Select a cryptocurrency to view comprehensive analysis and interactive visualizations
+
+        .selection-card
+            h3 Select a Cryptocurrency
+            p Choose from the top 10 cryptocurrencies by market cap:
+
+            //- Form to select cryptocurrency
+            form.coin-form(method="GET" action="/dashboard")
+                .form-group
+                    label(for="coin-select") Cryptocurrency:
+                    select#coin-select.coin-select(name="coin" required)
+                        option(value="" disabled selected) -- Select a coin --
+                        //- Loop through the coins passed from the server
+                        each coin in coins
+                            option(value=coin.id)= `${coin.name} (${coin.symbol.toUpperCase()}) - $${coin.current_price.toLocaleString()}`
+
+                button.btn.btn-primary(type="submit") 
+                    span 📈 Analyze
+
+        .features
+            h3 What You'll Get
+            .features-grid
+                .feature-card
+                    .feature-icon 📊
+                    h4 Time Series Analysis
+                    p View price trends and 7-day moving averages over the last 90 days
+
+                .feature-card
+                    .feature-icon 📉
+                    h4 Return Distribution
+                    p Analyze daily return percentages with histograms and statistical insights
+
+                .feature-card
+                    .feature-icon 🔍
+                    h4 Volume-Price Relationship
+                    p Explore correlations between trading volume and price movements
+
+                .feature-card
+                    .feature-icon 🔥
+                    h4 Correlation Heatmap
+                    p Understand relationships between price, volume, and market cap
+
