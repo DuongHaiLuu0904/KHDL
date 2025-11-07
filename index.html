@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Analysis Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="index.html">📊 Crypto Analysis Dashboard</a>
+            </h1>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="#features">Features</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero">
+                <h2 class="hero-title">Welcome to Crypto Analysis Dashboard</h2>
+                <p class="hero-subtitle">Select a cryptocurrency to view comprehensive analysis and interactive visualizations</p>
+            </div>
+
+            <!-- Selection Card -->
+            <div class="selection-card">
+                <h3>Select a Cryptocurrency</h3>
+                <p>Choose from the top 10 cryptocurrencies by market cap:</p>
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="loading" style="text-align: center; padding: 2rem;">
+                    <div class="spinner"></div>
+                    <p>Loading cryptocurrencies...</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-message" class="error-message" style="display: none;">
+                    <p style="color: #ef4444; text-align: center;">Failed to load cryptocurrencies. Please try again later.</p>
+                </div>
+
+                <!-- Coin Selection Form -->
+                <form class="coin-form" id="coin-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="coin-select">Cryptocurrency:</label>
+                        <select id="coin-select" class="coin-select" name="coin" required>
+                            <option value="" disabled selected>-- Select a coin --</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit">
+                        <span>📈 Analyze</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features" id="features">
+                <h3>What You'll Get</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>Time Series Analysis</h4>
+                        <p>View price trends and 7-day moving averages over the last 90 days</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📉</div>
+                        <h4>Return Distribution</h4>
+                        <p>Analyze daily return percentages with histograms and statistical insights</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h4>Volume-Price Relationship</h4>
+                        <p>Explore correlations between trading volume and price movements</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔥</div>
+                        <h4>Correlation Heatmap</h4>
+                        <p>Understand relationships between price, volume, and market cap</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Advanced Analytics</h4>
+                        <p>Violin plots, box plots, and statistical distributions for deep insights</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🌳</div>
+                        <h4>Hierarchical Views</h4>
+                        <p>Treemap and Sunburst charts for multi-level data exploration</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🕸️</div>
+                        <h4>Network Analysis</h4>
+                        <p>Visualize relationships between metrics with interactive network graphs</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h4>Interactive Charts</h4>
+                        <p>11 interactive visualizations powered by Plotly.js - zoom, pan, and explore!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Crypto Analysis Dashboard. Data provided by CoinGecko API.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

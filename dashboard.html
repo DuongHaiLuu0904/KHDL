@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Analysis Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Plotly.js for Interactive Charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="index.html">📊 Crypto Analysis Dashboard</a>
+            </h1>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="index.html#features">Features</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Loading Indicator -->
+            <div id="loading-dashboard" class="loading" style="text-align: center; padding: 4rem;">
+                <div class="spinner"></div>
+                <p>Loading cryptocurrency data and preparing analysis...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-dashboard" class="error-message" style="display: none;">
+                <h3 style="color: #ef4444;">❌ Error Loading Data</h3>
+                <p id="error-text">Failed to load cryptocurrency data. Please try again.</p>
+                <a href="index.html" class="btn btn-primary" style="margin-top: 1rem; width: auto;">← Back to Selection</a>
+            </div>
+
+            <!-- Dashboard Content (Hidden until data is loaded) -->
+            <div id="dashboard-content" style="display: none;">
+                <!-- Coin Header -->
+                <div class="coin-header">
+                    <div class="coin-info">
+                        <img id="coin-image" class="coin-image" src="" alt="">
+                        <div>
+                            <h2 id="coin-name" class="coin-name">Loading...</h2>
+                            <p id="coin-symbol" class="coin-symbol">---</p>
+                            <p id="coin-rank" class="coin-rank">Rank #--</p>
+                        </div>
+                    </div>
+                    <div class="coin-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Current Price</div>
+                            <div id="coin-price" class="stat-value">$--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Market Cap</div>
+                            <div id="coin-market-cap" class="stat-value">$--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="actions">
+                    <a class="btn btn-secondary" href="index.html">← Back to Selection</a>
+                </div>
+
+                <!-- Statistics Overview -->
+                <div class="stats-section">
+                    <h3>📊 Statistical Summary (90 Days)</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Price Statistics</h4>
+                            <p><strong>Min:</strong> <span id="stat-price-min">$--</span></p>
+                            <p><strong>Max:</strong> <span id="stat-price-max">$--</span></p>
+                            <p><strong>Average:</strong> <span id="stat-price-mean">$--</span></p>
+                        </div>
+
+                        <div class="stat-card">
+                            <h4>Volume Statistics</h4>
+                            <p><strong>Min:</strong> <span id="stat-volume-min">$--</span></p>
+                            <p><strong>Max:</strong> <span id="stat-volume-max">$--</span></p>
+                            <p><strong>Average:</strong> <span id="stat-volume-mean">$--</span></p>
+                        </div>
+
+                        <div class="stat-card">
+                            <h4>Daily Returns</h4>
+                            <p><strong>Best Day:</strong> <span id="stat-return-max">--</span></p>
+                            <p><strong>Worst Day:</strong> <span id="stat-return-min">--</span></p>
+                            <p><strong>Volatility:</strong> <span id="stat-return-volatility">--</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <h3>📈 Interactive Visualizations</h3>
+
+                    <!-- Tabs -->
+                    <div class="charts-tabs">
+                        <button class="tab-button active" data-tab="distribution">📊 Distribution Analysis</button>
+                        <button class="tab-button" data-tab="timeseries">📈 Time Series</button>
+                        <button class="tab-button" data-tab="relationship">🔍 Relationships</button>
+                        <button class="tab-button" data-tab="advanced">🎯 Advanced</button>
+                    </div>
+
+                    <!-- Tab 1: Distribution Analysis -->
+                    <div class="tab-content active" data-content="distribution">
+                        <div class="chart-container">
+                            <h4>1. Histogram - Daily Returns Distribution</h4>
+                            <div id="histogram-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Phân phối phần trăm thay đổi giá hàng ngày. Giá trị dương = giá tăng.</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>2. Box Plot - Returns & Price Changes</h4>
+                            <div id="boxplot-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Box plot hiển thị phân vị, median và outliers của returns và price changes.</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>3. Violin Plot - Return Distribution Comparison</h4>
+                            <div id="violin-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">So sánh phân phối của ngày tăng giá vs ngày giảm giá.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Time Series -->
+                    <div class="tab-content" data-content="timeseries">
+                        <div class="chart-container">
+                            <h4>4. Line Chart - Price Trend & 7-Day Moving Average</h4>
+                            <div id="price-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Xu hướng giá theo thời gian với đường trung bình động 7 ngày.</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>5. Area Chart - Volume Over Time</h4>
+                            <div id="volume-area-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Khối lượng giao dịch theo thời gian.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Relationships -->
+                    <div class="tab-content" data-content="relationship">
+                        <div class="chart-container">
+                            <h4>6. Scatter Plot with Regression - Volume vs Price</h4>
+                            <div id="scatter-regression-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Mối quan hệ giữa khối lượng giao dịch và giá, kèm đường hồi quy tuyến tính.</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>7. Correlation Heatmap</h4>
+                            <div id="heatmap-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Ma trận tương quan giữa Price, Volume và Market Cap (-1 đến +1).</p>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Advanced -->
+                    <div class="tab-content" data-content="advanced">
+                        <div class="chart-container">
+                            <h4>8. Treemap - Market Performance by Period</h4>
+                            <div id="treemap-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Phân bổ khối lượng giao dịch trung bình theo từng quý (90 ngày chia 4 phần).</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>9. Sunburst Chart - Hierarchical Price Movement Analysis</h4>
+                            <div id="sunburst-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Phân tích phân cấp của các biến động giá theo thời gian (theo tuần và mức độ thay đổi).</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>10. Word Cloud - Price Movement Frequency</h4>
+                            <div id="wordcloud-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Tần suất các mức độ thay đổi giá (từ huge gain đến huge loss).</p>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>11. Network Graph - Price-Volume Correlation Network</h4>
+                            <div id="network-chart" class="chart-placeholder"></div>
+                            <p class="chart-description">Mạng lưới biểu diễn mối quan hệ giữa các metrics: Price, Volume, Market Cap và Returns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Crypto Analysis Dashboard. Data provided by CoinGecko API.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

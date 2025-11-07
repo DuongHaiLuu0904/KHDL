@@ -1,173 +1,196 @@
-# 📊 Cryptocurrency Analysis Dashboard
+# 📊 Cryptocurrency Analysis Dashboard - Pure Frontend
 
-A comprehensive web-based cryptocurrency analysis dashboard that provides advanced data analytics and interactive visualizations for cryptocurrency market data.
+Phiên bản frontend thuần (Pure HTML, CSS, JavaScript) của dashboard phân tích cryptocurrency với visualization tương tác.
 
-## 🚀 Features
+## 🌟 Tính Năng
 
-- **Real-time Data**: Fetches live cryptocurrency data from CoinGecko API
-- **Advanced Analytics**: Uses Danfo.js for data processing and feature engineering
-- **Interactive Visualizations**: Multiple Plotly.js charts including:
-  - Time series with 7-day moving average
-  - Daily returns histogram
-  - Volume vs Price scatter plot
-  - Correlation heatmap
-- **Top 10 Cryptocurrencies**: Select from the top coins by market cap
-- **90-Day Historical Data**: Comprehensive historical analysis
-- **Responsive Design**: Works on desktop and mobile devices
+- **Real-time Data**: Lấy dữ liệu trực tiếp từ CoinGecko API
+- **9 Loại Biểu Đồ Tương Tác**: 
+  - Time Series với Moving Average (7 ngày)
+  - Histogram phân phối returns
+  - Box Plot & Violin Plot
+  - Scatter Plot với Regression Line
+  - Correlation Heatmap
+  - Treemap & Word Cloud
+- **Top 10 Cryptocurrencies**: Chọn từ top 10 coin theo market cap
+- **90 Ngày Dữ Liệu**: Phân tích historical data 90 ngày
+- **Responsive Design**: Hoạt động tốt trên desktop và mobile
+- **Không Cần Backend**: Chạy hoàn toàn trên browser
 
-## 🛠️ Technology Stack
+## 🛠️ Công Nghệ Sử Dụng
 
-- **Backend**: Node.js, Express
-- **Templating Engine**: Pug
-- **Data Source**: CoinGecko Public API
-- **HTTP Client**: Axios
-- **Data Processing**: Native JavaScript (Pandas-like operations)
-- **Data Visualization**: Plotly.js
-- **Styling**: Custom CSS
+- **HTML5**: Structure thuần
+- **CSS3**: Styling với CSS Variables và Flexbox/Grid
+- **JavaScript (ES6+)**: Logic xử lý data và render charts
+- **Plotly.js**: Thư viện visualization (CDN)
+- **CoinGecko API**: Nguồn dữ liệu cryptocurrency (Free tier)
 
-## 📁 Project Structure
+## 📁 Cấu Trúc Dự Án
 
 ```
-/
-├── server.js              # Main Express server
-├── package.json           # Dependencies and scripts
-├── routes/
-│   └── index.js          # Application routes
-├── utils/
-│   ├── cryptoApi.js      # CoinGecko API service
-│   └── dataProcessor.js  # Data analysis with Danfo.js
-├── views/
-│   ├── layout.pug        # Base template
-│   ├── index.pug         # Homepage
-│   ├── dashboard.pug     # Dashboard page
-│   └── error.pug         # Error page
-├── public/
-│   ├── js/
-│   │   └── dashboard.js  # Client-side Plotly rendering
-│   └── css/
-│       └── style.css     # Styling
-└── README.md
+KHDL/
+├── index.html              # Trang chủ - chọn cryptocurrency
+├── dashboard.html          # Trang dashboard với charts
+├── css/
+│   └── style.css          # CSS thuần - không framework
+├── js/
+│   ├── main.js            # Logic cho trang chủ
+│   └── dashboard.js       # Logic cho dashboard + charts
+└── README.md              # File này
 ```
 
-## 🔧 Installation
+## 🚀 Cách Sử Dụng
 
-1. **Clone or download this project**
+### Phương Pháp 1: Mở Trực Tiếp File HTML
 
-2. **Navigate to the project directory**
-   ```bash
-   cd crypto-analysis-dashboard
-   ```
+1. **Mở file `index.html`** bằng trình duyệt web (Chrome, Firefox, Edge, Safari)
+   - Cách 1: Double-click vào file `index.html`
+   - Cách 2: Kéo thả file vào cửa sổ browser
 
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
+2. **Chọn cryptocurrency** từ dropdown menu (Top 10 coins)
 
-4. **Configure environment variables**
-   ```bash
-   # Copy the example file
-   cp .env.example .env
-   
-   # Edit .env and add your CoinGecko API key
-   COINGECKO_API_KEY=your_api_key_here
-   ```
+3. **Click "📈 Analyze"** để xem dashboard với 9 biểu đồ phân tích
 
-## 🚀 Running the Application
+### Phương Pháp 2: Sử Dụng Local Server (Khuyến Nghị)
 
-### Development Mode (with auto-restart)
+Để tránh vấn đề CORS và tối ưu performance, nên chạy local server:
+
+#### Dùng Python:
 ```bash
-npm run dev
+# Python 3
+python -m http.server 8000
+
+# Python 2
+python -m SimpleHTTPServer 8000
 ```
 
-### Production Mode
+#### Dùng Node.js (Live Server):
 ```bash
-npm start
+# Cài đặt live-server global
+npm install -g live-server
+
+# Chạy server
+live-server
 ```
 
-The application will be available at: **http://localhost:3000**
+#### Dùng VS Code:
+- Cài extension "Live Server"
+- Right-click vào `index.html` → "Open with Live Server"
 
-## 📖 Usage
+Sau đó truy cập: **http://localhost:8000**
 
-1. **Homepage**: Visit the homepage to see the top 10 cryptocurrencies
-2. **Select a Coin**: Choose a cryptocurrency from the dropdown menu
-3. **View Dashboard**: Click "Analyze" to view comprehensive analysis
-4. **Explore Charts**: Interact with the visualizations:
-   - Hover over data points for details
-   - Zoom and pan on charts
-   - Download charts as PNG images
+## 📊 Các Biểu Đồ Phân Tích
 
-## 📊 Data Processing Features
+### Tab 1: Distribution Analysis
+1. **Histogram** - Phân phối daily returns
+2. **Box Plot** - Returns & Price changes với outliers
+3. **Violin Plot** - So sánh ngày tăng vs ngày giảm
 
-The dashboard uses **native JavaScript** to perform advanced data analysis:
+### Tab 2: Time Series
+4. **Line Chart** - Giá theo thời gian + MA 7 ngày
+5. **Area Chart** - Volume giao dịch
 
-- **Data Standardization**: Converts Unix timestamps to readable dates
-- **Missing Data Handling**: Checks for and handles missing values
-- **7-Day Moving Average**: Smooths price trends
-- **Daily Returns**: Calculates percentage changes
-- **Correlation Analysis**: Shows relationships between price, volume, and market cap
-- **Statistical Summary**: Min, max, mean, and volatility metrics
+### Tab 3: Relationships
+6. **Scatter + Regression** - Volume vs Price với R²
+7. **Correlation Heatmap** - Tương quan Price/Volume/Market Cap
 
-## 🎨 Visualizations
+### Tab 4: Advanced
+8. **Treemap** - Phân bổ volume theo quý
+9. **Word Cloud** - Tần suất thay đổi giá
 
-1. **Time Series Chart**: Price trends with 7-day moving average
-2. **Histogram**: Distribution of daily returns
-3. **Scatter Plot**: Volume vs Price relationship
-4. **Heatmap**: Correlation matrix for key metrics
+## 🔧 Tùy Chỉnh
 
-## 🌐 API Information
+### Thay Đổi Số Lượng Coins
+Trong `js/main.js`, dòng 30:
+```javascript
+const response = await fetch(`${API_BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false`);
+```
+Thay `per_page=10` thành số khác (vd: 20, 50)
 
-This project uses the **CoinGecko API**:
-- **Base URL**: `https://api.coingecko.com/api/v3`
-- **API Key**: Required (get free key at [CoinGecko](https://www.coingecko.com/en/api))
-- **Rate Limit**: 10-30 calls per minute (free tier)
-- **Documentation**: [CoinGecko API Docs](https://www.coingecko.com/en/api)
+### Thay Đổi Thời Gian Phân Tích
+Trong `js/dashboard.js`, dòng 103:
+```javascript
+const response = await fetch(`${API_BASE_URL}/coins/${coinId}/market_chart?vs_currency=usd&days=90&interval=daily`);
+```
+Thay `days=90` thành số ngày khác (7, 30, 180, 365)
 
-## ☁️ Deploy to Vercel
+### Thay Đổi Màu Sắc
+Trong `css/style.css`, dòng 12-19:
+```css
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #8b5cf6;
+    /* Thay đổi màu theo ý muốn */
+}
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/crypto-dashboard)
+## 🎯 So Sánh Với Phiên Bản Cũ
 
-### Quick Deploy Steps:
+| Tính năng | Phiên bản cũ (Backend) | Phiên bản mới (Pure Frontend) |
+|-----------|------------------------|-------------------------------|
+| Backend Server | ✅ Node.js + Express | ❌ Không cần |
+| Template Engine | ✅ Pug | ❌ HTML thuần |
+| Dependencies | ✅ npm packages | ❌ Chỉ Plotly.js CDN |
+| Deployment | Cần hosting Node.js | Chỉ cần static hosting |
+| Setup | Phức tạp (npm install) | Đơn giản (mở file) |
+| Performance | Server-side processing | Client-side processing |
 
-1. **Push code to GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/YOUR_USERNAME/crypto-dashboard.git
-   git push -u origin main
-   ```
+## ⚡ Ưu Điểm
 
-2. **Deploy on Vercel**
-   - Visit [vercel.com/new](https://vercel.com/new)
-   - Import your GitHub repository
-   - Add environment variables:
-     - `COINGECKO_API_KEY`
-     - `COINGECKO_BASE_URL`
-     - `MIN_REQUEST_INTERVAL`
-   - Click Deploy
+✅ **Đơn Giản**: Không cần cài đặt dependencies  
+✅ **Portable**: Chạy ở bất kỳ đâu có browser  
+✅ **Deploy Dễ**: Host trên GitHub Pages, Netlify, Vercel miễn phí  
+✅ **Học Tập**: Code rõ ràng, dễ hiểu cho beginners  
+✅ **Lightweight**: Không có node_modules nặng nề  
 
-3. **Done!** Your app will be live at `https://your-project.vercel.app`
+## 🚨 Lưu Ý
 
-📖 **Detailed instructions**: See [DEPLOY.md](./DEPLOY.md)
+- **API Rate Limit**: CoinGecko free tier có giới hạn 10-50 requests/phút
+- **CORS**: Một số browser có thể block API calls khi mở file:// trực tiếp → Dùng local server
+- **Internet Required**: Cần kết nối internet để gọi CoinGecko API và load Plotly.js
+- **Browser Support**: Yêu cầu browser hiện đại (Chrome 90+, Firefox 88+, Safari 14+)
 
-## ⚠️ Important Notes
+## 📱 Responsive Design
 
-- The free CoinGecko API has rate limits. Avoid refreshing too frequently.
-- Data is fetched in real-time, so performance depends on API response times.
-- The app uses 90 days of historical data for analysis.
+Dashboard hoạt động tốt trên:
+- 💻 Desktop (1920x1080 và nhỏ hơn)
+- 📱 Tablet (768px - 1024px)
+- 📱 Mobile (320px - 767px)
 
-## 🤝 Contributing
+## 🆓 Deploy Miễn Phí
 
-Feel free to fork this project and submit pull requests for improvements!
+### GitHub Pages
+```bash
+git add .
+git commit -m "Deploy crypto dashboard"
+git push origin master
+```
+Settings → Pages → Source: master branch
+
+### Netlify
+- Kéo thả folder vào netlify.com/drop
+- Hoặc connect GitHub repo
+
+### Vercel
+```bash
+npm i -g vercel
+vercel
+```
+
+## 🤝 Đóng Góp
+
+Contributions, issues và feature requests đều welcome!
 
 ## 📝 License
 
-MIT License
+MIT License - Sử dụng tự do cho mục đích học tập và thương mại
 
-## 👨‍💻 Author
+## 👨‍💻 Tác Giả
 
-Expert Full-Stack NodeJS Developer
+Created with ❤️ for learning and education
 
 ---
 
-**Enjoy analyzing cryptocurrencies!** 🚀📈
+**Data provided by [CoinGecko API](https://www.coingecko.com/en/api)**
+
+**Visualization powered by [Plotly.js](https://plotly.com/javascript/)**
