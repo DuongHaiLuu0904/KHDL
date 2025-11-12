@@ -365,19 +365,15 @@ function prepareSunburstData(returns, dates) {
         }
     }
     
-    const labels = ['90 Days'];
-    const parents = [''];
-    const values = [0];
+    const labels = [];
+    const parents = [];
+    const values = [];
     const colors = [];
+    const text = [];
     
     weeks.forEach(weekData => {
         const weekReturns = weekData.returns;
         const avgReturn = weekReturns.reduce((a, b) => a + b, 0) / weekReturns.length;
-        
-        labels.push(weekData.week);
-        parents.push('90 Days');
-        values.push(Math.abs(avgReturn));
-        colors.push(avgReturn);
         
         // Add sub-categories for each week
         const categories = {
@@ -387,17 +383,28 @@ function prepareSunburstData(returns, dates) {
             'Big Loss': weekReturns.filter(r => r < -2).length
         };
         
-        Object.entries(categories).forEach(([cat, count]) => {
-            if (count > 0) {
-                labels.push(`${weekData.week}-${cat}`);
-                parents.push(weekData.week);
-                values.push(count);
-                colors.push(cat.includes('Gain') ? count : -count);
-            }
-        });
+        // Only add week if it has data
+        const weekTotal = Object.values(categories).reduce((a, b) => a + b, 0);
+        if (weekTotal > 0) {
+            labels.push(weekData.week);
+            parents.push('');
+            values.push(weekTotal);
+            colors.push(avgReturn);
+            text.push(`Avg: ${avgReturn.toFixed(2)}%`);
+            
+            Object.entries(categories).forEach(([cat, count]) => {
+                if (count > 0) {
+                    labels.push(`${weekData.week} - ${cat}`);
+                    parents.push(weekData.week);
+                    values.push(count);
+                    colors.push(cat.includes('Gain') ? Math.abs(count) : -Math.abs(count));
+                    text.push(`${count} days`);
+                }
+            });
+        }
     });
     
-    return { labels, parents, values, colors };
+    return { labels, parents, values, colors, text };
 }
 
 /**
@@ -909,6 +916,7 @@ function renderSunburstChart() {
         labels: data.labels,
         parents: data.parents,
         values: data.values,
+        text: data.text,
         marker: {
             colors: data.colors,
             colorscale: [
@@ -920,13 +928,14 @@ function renderSunburstChart() {
             line: { width: 2, color: '#ffffff' }
         },
         branchvalues: 'total',
-        hovertemplate: '<b>%{label}</b><br>Value: %{value:.2f}<extra></extra>'
+        hovertemplate: '<b>%{label}</b><br>%{text}<br>Count: %{value}<extra></extra>'
     };
     
     const layout = {
         title: 'Sunburst: Hierarchical Price Movement Analysis',
         paper_bgcolor: '#ffffff',
-        margin: { t: 60, b: 20, l: 20, r: 20 }
+        margin: { t: 60, b: 20, l: 20, r: 20 },
+        height: 600
     };
     
     const config = { responsive: true, displaylogo: false };
